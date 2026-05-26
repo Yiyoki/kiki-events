@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+const events = (await getCollection('events')).sort((a,b)=>b.data.eventDate.valueOf()-a.data.eventDate.valueOf());
+---
+<BaseLayout title="日期 · KiKi大事报">
+  <section class="page-hero compact"><p class="eyebrow">Dates</p><h1>日期</h1><p>按事件发生日期倒序排列。</p></section>
+  <section class="timeline">
+    {events.map((event) => (
+      <article>
+        <time>{event.data.eventDate.toLocaleDateString('zh-CN')}</time>
+        <h2><a href={`/events/${event.id}/`}>{event.data.title}</a></h2>
+        <p>{event.data.deck}</p>
+      </article>
+    ))}
+  </section>
+</BaseLayout>
