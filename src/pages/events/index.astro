@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const events = (await getCollection('events'))
+  .sort((a, b) => b.data.eventDate.valueOf() - a.data.eventDate.valueOf());
+---
+<BaseLayout title="事件档案 · KiKi大事报" description="按事件、日期和类别索引的深度新闻分析档案。">
+  <section class="page-hero compact">
+    <p class="eyebrow">Event Archive</p>
+    <h1>事件档案</h1>
+    <p>每篇稿件围绕一个事件展开：时间、背景、机制、影响和后续观察。</p>
+  </section>
+
+  <section class="content-list">
+    {events.map((event) => (
+      <article class="event-card">
+        <div class="meta-line">
+          <time datetime={event.data.eventDate.toISOString()}>{event.data.eventDate.toLocaleDateString('zh-CN')}</time>
+          <span>{event.data.category}</span>
+          {event.data.draft && <span class="draft">待审稿</span>}
+        </div>
+        <h2><a href={`/events/${event.id}/`}>{event.data.title}</a></h2>
+        <p>{event.data.deck}</p>
+        <div class="tag-row">
+          {event.data.tags.map((tag) => <span>#{tag}</span>)}
+        </div>
+      </article>
+    ))}
+  </section>
+</BaseLayout>
