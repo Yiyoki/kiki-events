@@ -1,0 +1,41 @@
+---
+const {
+  title = 'KiKi大事报',
+  description = '以事件和日期为索引的深度新闻分析。',
+} = Astro.props;
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="stylesheet" href="/styles/global.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="KiKi大事报首页">
+        <span class="brand-mark">K</span>
+        <span>
+          <strong>KiKi大事报</strong>
+          <small>Events & Analysis</small>
+        </span>
+      </a>
+      <nav aria-label="主导航">
+        <a href="/">首页</a>
+        <a href="/events/">事件</a>
+        <a href="/categories/">分类</a>
+        <a href="/dates/">日期</a>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <p>© {new Date().getFullYear()} KiKi大事报 · 作者署名 KiKi喵</p>
+      <p>本网站为静态事件分析档案，稿件发布前建议多源交叉核验。</p>
+    </footer>
+  </body>
+</html>
