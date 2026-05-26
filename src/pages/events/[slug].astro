@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const events = await getCollection('events');
+  return events.map((event) => ({ params: { slug: event.id }, props: { event } }));
+}
+
+const { event } = Astro.props;
+const { Content } = await render(event);
+---
+<BaseLayout title={`${event.data.title} · KiKi大事报`} description={event.data.deck}>
+  <article class="article-shell">
+    <header class="article-header">
+      <div class="meta-line">
+        <time datetime={event.data.eventDate.toISOString()}>{event.data.eventDate.toLocaleDateString('zh-CN')}</time>
+        <span>{event.data.category}</span>
+        <span>{event.data.region}</span>
+        {event.data.draft && <span class="draft">待审稿</span>}
+      </div>
+      <h1>{event.data.title}</h1>
+      <p class="deck">{event.data.deck}</p>
+      <div class="byline">
+        <span>作者：{event.data.author}</span>
+        <span>发布：{event.data.publishedAt.toLocaleString('zh-CN', { hour12: false })}</span>
+      </div>
+      <div class="tag-row">
+        {event.data.tags.map((tag) => <span>#{tag}</span>)}
+      </div>
+    </header>
+
+    <div class="article-grid">
+      <aside class="source-box" aria-label="参考来源">
+        <h2>参考来源</h2>
+        <ol>
+          {event.data.sources.map((source) => (
+            <li><a href={source.url} target="_blank" rel="noreferrer">{source.title}</a><small>{source.outlet}</small></li>
+          ))}
+        </ol>
+      </aside>
+      <div class="article-content">
+        <Content />
+      </div>
+    </div>
+  </article>
+</BaseLayout>
