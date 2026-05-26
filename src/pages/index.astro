@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const events = (await getCollection('events'))
+  .sort((a, b) => b.data.eventDate.valueOf() - a.data.eventDate.valueOf());
+const latest = events[0];
+const categories = [...new Set(events.map((event) => event.data.category))];
+---
+<BaseLayout title="KiKi大事报 · 事件分析档案" description="简洁、严肃、按事件和日期组织的深度新闻分析。">
+  <section class="page-hero">
+    <p class="eyebrow">KiKi Events Briefing</p>
+    <h1>用事件，而不是信息流，记录关键变化。</h1>
+    <p>KiKi大事报以日期、类别和事件为索引，把公开信息整理成可审稿、可追踪、可复盘的深度新闻档案。</p>
+  </section>
+
+  {latest && (
+    <section class="lead-story">
+      <div class="section-label">Latest Analysis</div>
+      <article>
+        <div class="meta-line">
+          <time datetime={latest.data.eventDate.toISOString()}>{latest.data.eventDate.toLocaleDateString('zh-CN')}</time>
+          <span>{latest.data.category}</span>
+          {latest.data.draft && <span class="draft">待审稿</span>}
+        </div>
+        <h2><a href={`/events/${latest.id}/`}>{latest.data.title}</a></h2>
+        <p>{latest.data.deck}</p>
+        <a class="read-more" href={`/events/${latest.id}/`}>阅读全文</a>
+      </article>
+    </section>
+  )}
+
+  <section class="index-grid">
+    <div>
+      <div class="section-label">By Date</div>
+      <h2>日期索引</h2>
+      <ul class="plain-list">
+        {events.map((event) => (
+          <li><a href={`/events/${event.id}/`}>{event.data.eventDate.toLocaleDateString('zh-CN')} · {event.data.title}</a></li>
+        ))}
+      </ul>
+    </div>
+    <div>
+      <div class="section-label">By Category</div>
+      <h2>类别索引</h2>
+      <div class="category-list">
+        {categories.map((category) => <a href={`/categories/#${category}`}>{category}</a>)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
