@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+const events = await getCollection('events');
+const groups = Object.groupBy(events, (event) => event.data.category);
+---
+<BaseLayout title="分类 · KiKi大事报">
+  <section class="page-hero compact"><p class="eyebrow">Categories</p><h1>分类</h1><p>按议题属性聚合事件分析。</p></section>
+  <section class="content-list">
+    {Object.entries(groups).map(([category, items]) => (
+      <div id={category} class="category-block">
+        <h2>{category}</h2>
+        {(items ?? []).map((event) => <p><a href={`/events/${event.id}/`}>{event.data.title}</a></p>)}
+      </div>
+    ))}
+  </section>
+</BaseLayout>
