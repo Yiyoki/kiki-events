@@ -47,6 +47,18 @@ const variants = {
     src: mascotSrc('finance-glasses-suit-right-34'),
     alt: 'KiKi 金融金丝眼镜职业装猫娘右三分之四头像',
   },
+  politics: {
+    src: mascotSrc('politics-hanfu-hairpin'),
+    alt: 'KiKi 汉服簪子政治类猫娘头像',
+  },
+  politicsRight: {
+    src: mascotSrc('politics-hanfu-hairpin-right-34'),
+    alt: 'KiKi 汉服簪子政治类猫娘右三分之四头像',
+  },
+  politicsScroll: {
+    src: mascotSrc('politics-hanfu-hairpin-scroll'),
+    alt: 'KiKi 深色汉服簪子政治类猫娘头像',
+  },
   sports: {
     src: mascotSrc('sports-bandage'),
     alt: 'KiKi 运动户外短发创可贴猫娘头像',
@@ -86,8 +98,12 @@ export function getMascotForCategory(category = '', seed = ''): MascotVariant {
   const normalized = category.toLowerCase();
   const hasTech = /科技|ai|人工智能|芯片|半导体|互联网|软件|硬件|模型/.test(normalized);
   const hasFinance = /金融|财经|财报|市场|股票|资本|估值|市值|经济|投资/.test(normalized);
+  const hasPolitics = /政治|政务|外交|地缘|国际关系|国家|政府|总统|首相|选举|国会|议会|制裁|安全|军事|中塞|访问/.test(normalized);
   const hasSports = /运动|体育|户外|赛事|足球|篮球|跑步|骑行/.test(normalized);
 
+  if (hasPolitics) {
+    return pickBySeed([variants.politics, variants.politicsRight, variants.politicsScroll], seed || category);
+  }
   if (hasSports) {
     return pickBySeed([variants.sports, variants.sportsLeft, variants.sportsRight], seed || category);
   }
