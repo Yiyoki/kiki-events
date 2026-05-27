@@ -1,8 +1,15 @@
 ---
+import { getHomeMascot, getMascotForCategory } from '../lib/mascot';
+
 const {
   title = 'KiKi大事报',
   description = '以事件和日期为索引的深度新闻分析。',
+  mascot,
+  category = '',
+  mascotSeed = title,
 } = Astro.props;
+
+const brandMascot = mascot ?? (category ? getMascotForCategory(category, mascotSeed) : getHomeMascot());
 ---
 <!doctype html>
 <html lang="zh-CN">
@@ -17,7 +24,7 @@ const {
   <body>
     <header class="site-header">
       <a class="brand" href="/" aria-label="KiKi大事报首页">
-        <span class="brand-mark">K</span>
+        <img class="brand-mark" src={brandMascot.src} alt={brandMascot.alt} width="44" height="44" loading="eager" decoding="async" />
         <span>
           <strong>KiKi大事报</strong>
           <small>Events & Analysis</small>

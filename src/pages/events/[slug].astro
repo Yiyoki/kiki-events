@@ -10,7 +10,7 @@ export async function getStaticPaths() {
 const { event } = Astro.props;
 const { Content } = await render(event);
 ---
-<BaseLayout title={`${event.data.title} · KiKi大事报`} description={event.data.deck}>
+<BaseLayout title={`${event.data.title} · KiKi大事报`} description={event.data.deck} category={event.data.category} mascotSeed={event.id}>
   <article class="article-shell">
     <header class="article-header">
       <div class="meta-line">
