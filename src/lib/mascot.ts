@@ -3,67 +3,72 @@ export type MascotVariant = {
   alt: string;
 };
 
-const mascotBase = '/images/mascot/';
+const mascotBase = '/images/mascot-optimized/';
+const mascotExt = '.webp';
+function mascotSrc(name: string): string {
+  return `${mascotBase}${name}${mascotExt}`;
+}
+
 
 const variants = {
   home: {
-    src: `${mascotBase}home-twintails.png`,
+    src: mascotSrc('home-twintails'),
     alt: 'KiKi 双马尾居家猫娘头像',
   },
   homeLeft: {
-    src: `${mascotBase}home-twintails-left-34.png`,
+    src: mascotSrc('home-twintails-left-34'),
     alt: 'KiKi 双马尾居家猫娘左三分之四头像',
   },
   homeRight: {
-    src: `${mascotBase}home-twintails-right-34.png`,
+    src: mascotSrc('home-twintails-right-34'),
     alt: 'KiKi 双马尾居家猫娘右三分之四头像',
   },
   tech: {
-    src: `${mascotBase}tech-hood-mask.png`,
+    src: mascotSrc('tech-hood-mask'),
     alt: 'KiKi 科技兜帽口罩猫娘头像',
   },
   techLeft: {
-    src: `${mascotBase}tech-hood-mask-left-34.png`,
+    src: mascotSrc('tech-hood-mask-left-34'),
     alt: 'KiKi 科技兜帽口罩猫娘左三分之四头像',
   },
   techRight: {
-    src: `${mascotBase}tech-hood-mask-right-34.png`,
+    src: mascotSrc('tech-hood-mask-right-34'),
     alt: 'KiKi 科技兜帽口罩猫娘右三分之四头像',
   },
   finance: {
-    src: `${mascotBase}finance-glasses-suit.png`,
+    src: mascotSrc('finance-glasses-suit'),
     alt: 'KiKi 金融金丝眼镜职业装猫娘头像',
   },
   financeLeft: {
-    src: `${mascotBase}finance-glasses-suit-left-34.png`,
+    src: mascotSrc('finance-glasses-suit-left-34'),
     alt: 'KiKi 金融金丝眼镜职业装猫娘左三分之四头像',
   },
   financeRight: {
-    src: `${mascotBase}finance-glasses-suit-right-34.png`,
+    src: mascotSrc('finance-glasses-suit-right-34'),
     alt: 'KiKi 金融金丝眼镜职业装猫娘右三分之四头像',
   },
   sports: {
-    src: `${mascotBase}sports-bandage.png`,
+    src: mascotSrc('sports-bandage'),
     alt: 'KiKi 运动户外短发创可贴猫娘头像',
   },
   sportsLeft: {
-    src: `${mascotBase}sports-bandage-left-34.png`,
+    src: mascotSrc('sports-bandage-left-34'),
     alt: 'KiKi 运动户外短发创可贴猫娘左三分之四头像',
   },
   sportsRight: {
-    src: `${mascotBase}sports-bandage-right-34.png`,
+    src: mascotSrc('sports-bandage-right-34'),
     alt: 'KiKi 运动户外短发创可贴猫娘右三分之四头像',
   },
   jk: {
-    src: `${mascotBase}jk-high-ponytail.png`,
+    src: mascotSrc('jk-high-ponytail'),
     alt: 'KiKi 高马尾 JK 猫娘头像',
   },
   jkLeft: {
-    src: `${mascotBase}jk-high-ponytail-left-34.png`,
+    src: mascotSrc('jk-high-ponytail-left-34'),
     alt: 'KiKi 高马尾 JK 猫娘左三分之四头像',
   },
   jkRight: {
-    src: `${mascotBase}jk-high-ponytail-right-34.png`,
+    src: mascotSrc('jk-high-ponytail-right-34'),
     alt: 'KiKi 高马尾 JK 猫娘右三分之四头像',
   },
 } satisfies Record<string, MascotVariant>;
@@ -110,3 +115,4 @@ export function getMascotForCategory(category = '', seed = ''): MascotVariant {
 export function getHomeMascot(): MascotVariant {
   return variants.home;
 }
+
